@@ -6,7 +6,7 @@ use warnings;
 
 our @EXPORT = qw(iterator);
 
-our $VERSION = 1.02;
+our $VERSION = 1.04;
 
 sub iterator { __PACKAGE__->new(@_) }
 
