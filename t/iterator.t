@@ -4,7 +4,7 @@ use strict;
 use warnings;
 use Test::More tests => 7;
 
-use Rewatermarking::Iterator;
+use Functional::Iterator;
 
 sub all {
 	my ($iterator) = @_;
