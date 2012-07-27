@@ -2,3 +2,5 @@ README.md
 Makefile
 .git/
 .gitignore
+blib/
+pm_to_blib
