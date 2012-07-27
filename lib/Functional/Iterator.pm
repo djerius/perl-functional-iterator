@@ -6,7 +6,7 @@ use warnings;
 
 our @EXPORT = qw(iterator);
 
-our $VERSION = 1.01;
+our $VERSION = 1.02;
 
 sub iterator { __PACKAGE__->new(@_) }
 
@@ -105,8 +105,8 @@ You can combine these qualities to slightly interesting effect:
   my $letter = 'a';
   my $letters = iterator(
     generator => sub {
-      my $ret = $start++;
-      $ret = undef if $ret > 'z';
+      my $ret = $letter++;
+      $ret = undef if $ret eq 'z';
       return $ret;
     }
   );
