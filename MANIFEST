@@ -1,0 +1,5 @@
+MANIFEST
+Makefile.PL
+lib/Functional/Iterator.pm
+t/iterator.t
+MANIFEST.SKIP
