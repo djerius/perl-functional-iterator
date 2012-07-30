@@ -8,6 +8,7 @@ SYNOPSIS
 
 A naive example is just to turn a list into an iterable:
 
+```perl
   use Functional::Iterator;
 
   my $iterator = iterator(records => [1..10]);
@@ -15,6 +16,7 @@ A naive example is just to turn a list into an iterable:
   while (my $rec = $iterator->next) {
     print "$rec\n";
   }
+```
 
 Iterators are set up either with a set of records, or with a generator.
 When a set of records is provided, calling ->next on the iterator will
@@ -34,6 +36,7 @@ $iterator->next gets the mutator’s return value.
 
 You can combine these qualities to slightly interesting effect:
 
+```perl
   use Functional::Iterator;
 
   my $numbers = iterator(
@@ -57,6 +60,7 @@ You can combine these qualities to slightly interesting effect:
   while (my $rec = $numbers_and_letters->next) {
     print "$rec\n";
   }
+```
 
 EXPORTS
 =======
@@ -83,8 +87,10 @@ METHODS
       If you really want to create your iterators like this, you cer-
       tainly may:
 
-        # see C<iterator()> for the full set of arguments you may pass to ->new
-        my $iterator = Functional::Iterator->new(records => \@records);
+```perl
+  # see iterator() for the full set of arguments you may pass to ->new
+  my $iterator = Functional::Iterator->new(records => \@records);
+```
 
 LIMITATIONS
 ===========
