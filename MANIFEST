@@ -3,3 +3,6 @@ Makefile.PL
 lib/Functional/Iterator.pm
 t/iterator.t
 MANIFEST.SKIP
+.gitconfig
+LICENSE
+t/generate-iterators.t
