@@ -82,7 +82,7 @@ __END__
 
 =pod
 
-=head1
+=head1 NAME
 
 Functional::Iterator - A generic iterator
 
