@@ -12,7 +12,17 @@ sub iterator { __PACKAGE__->new(@_) }
 
 sub new {
   my ($class, %args) = @_;
-  return bless +{
+
+  my $self;
+
+  $self = bless +{
+                  reset => sub {
+                      $self->{index} = 0;
+                      delete $self->{generated_record};
+                      foreach (grep { UNIVERSAL::isa($_, __PACKAGE__) } @{$self->{records}}) {
+                          $_->reset;
+                      }
+                  },
     %args,
     index => 0,
   }, $class;
@@ -67,14 +77,7 @@ sub next {
     : $record;
 }
 
-sub reset {
-  my ($self) = @_;
-  $self->{index} = 0;
-  delete $self->{generated_record};
-  foreach (grep { UNIVERSAL::isa($_, __PACKAGE__) } @{$self->{records}}) {
-    $_->reset;
-  }
-}
+sub reset { $_[0]->{reset}->() }
 
 1;
 
@@ -196,12 +199,15 @@ You can combine these qualities to slightly interesting effect:
 
 =item * iterator (records => \@records, mutator => \&mutator)
 
-=item * iterator (generator => \&generator)
+=item * iterator (generator => \&generator, ?reset => \&reset )
 
-=item * iterator (generator => \&generator, mutator => \&mutator)
+=item * iterator (generator => \&generator, mutator => \&mutator, ?reset => \&reset)
 
-Helper function for creating iterator objects. If both a generator and records are provided,
-only the generator is considered.
+Helper function for creating iterator objects. If both a generator and
+records are provided, only the generator is considered.  The C<reset>
+option to C<generator> iterators specifies a code reference which when
+called will reset the generator to its initial value.  It is not
+required for C<record> iterators.
 
 =back
 
@@ -215,8 +221,8 @@ Return the next value in this iterator.
 
 =item * ->reset()
 
-Rewind this iterator, and any sub-iterators, back to the beginning of their records. ->reset is
-meaningless to iterators built around generators.
+Rewind this iterator, and any sub-iterators, back to the beginning of their records.
+
 
 =item * ->new()
 
