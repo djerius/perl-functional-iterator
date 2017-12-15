@@ -12,17 +12,7 @@ sub iterator { __PACKAGE__->new(@_) }
 
 sub new {
   my ($class, %args) = @_;
-
-  my $self;
-
-  $self = bless +{
-                  reset => sub {
-                      $self->{index} = 0;
-                      delete $self->{generated_record};
-                      foreach (grep { UNIVERSAL::isa($_, __PACKAGE__) } @{$self->{records}}) {
-                          $_->reset;
-                      }
-                  },
+  return bless +{
     %args,
     index => 0,
   }, $class;
@@ -77,7 +67,19 @@ sub next {
     : $record;
 }
 
-sub reset { $_[0]->{reset}->() }
+sub reset {
+  my ($self) = @_;
+
+  if ( $self->{reset} ) {
+      $self->{reset}->();
+  } else {
+    $self->{index} = 0;
+    delete $self->{generated_record};
+    foreach (grep { UNIVERSAL::isa($_, __PACKAGE__) } @{$self->{records}}) {
+      $_->reset;
+    }
+  }
+}
 
 1;
 
